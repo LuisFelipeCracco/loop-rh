@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Meus Vídeos e Imagens</title>
+    <style>
+      /* Estilos CSS para os elementos de vídeo e imagem */
+      #media-container {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      #media-container img, #media-container video {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      #media-container img.active, #media-container video.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="media-container">
+      <img src="imagem3.png" class="active">
+      <img src="imagem1.png">
+      <img src="https://cdn.shopify.com/s/files/1/0286/7209/8435/files/pampili-site-og-simples_8e4b3516-aed5-4af3-a758-3beabe256208.png?v=1614350116">
+      <video id="video1" controls muted>
+        <source src="video1.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo
+    </video>
+    <!-- <video id="video2" controls>
+      <source src="video2.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video> -->
+  </div>
+  <script>
+    var currentIndex = 0;
+    var items = document.querySelectorAll("#media-container img, #media-container video");
+
+    function loop() {
+      if(items[currentIndex].tagName == "VIDEO") {
+        items[currentIndex].removeEventListener("timeupdate", checkEnd);
+      }
+      items[currentIndex].classList.remove("active");
+      currentIndex = currentIndex + 1 >= items.length ? 0 : currentIndex + 1;
+      items[currentIndex].classList.add("active");
+      if(items[currentIndex].tagName == "VIDEO") {
+        items[currentIndex].play();
+        items[currentIndex].addEventListener("timeupdate", checkEnd);
+      }else{
+        setTimeout(loop,3000);
+      }
+    }
+    
+    function checkEnd() {
+      if (this.currentTime >= this.duration) {
+        loop();
+      }
+    }
+    loop();
+  </script>
+</body>
+
+</html>  
